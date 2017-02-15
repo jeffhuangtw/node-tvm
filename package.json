@@ -12,9 +12,11 @@
     "tvm",
     "sts"
   ],
-  "dependencies" : {
+  "dependencies": {
+    "body-parser": "~1.15.2",
     "aws-sdk": "*",
-    "express": "*"
+    "express": "*",
+    "foreman": "^2.0.0"
   },
   "license": "MIT",
   "engines": {
