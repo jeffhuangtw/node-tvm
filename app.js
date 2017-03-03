@@ -12,7 +12,7 @@ app.post('/registrations', function (req, res) {
         if (err) {
             return handleError(res, err);
         }
-        res.status(200).send(JSON.stringify({ 'result': 'ok' }));
+        res.status(200).json({ 'result': 'ok' });
     });
 });
 
@@ -21,13 +21,13 @@ app.get('/tokens', function (req, res) {
         if (err) {
             return handleError(res, err);
         }
-        res.status(200).send(JSON.stringify(data));
+        res.status(200).json(data);
     });
 });
 
 var handleError = function (res, err) {
     console.log(err.stack);
-    res.status(err.status || 500).send(JSON.stringify({ 'error': err.message }));
+    res.status(err.status || 500).json({ 'error': err.message });
 };
 
 app.listen(app.get('port'));

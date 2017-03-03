@@ -11,22 +11,27 @@ exports.register = function (deviceID, key, callback) {
     var item = { 'device_id': { 'S': deviceID }, 'key': { 'S': key } };
     dynamodb.getItem({ TableName: tableName, Key: { 'device_id': { 'S': deviceID } } }, function (err, data) {
         if (err) return callback(err, null);
-        if (data) {
-            console.log('uid already registered');
+        if (data && data.Item) {
+            // user already registered
+            console.log('this uid already registered: ' + deviceID);
             if (key == data.Item.key.S) {
+                // secret key matched
                 return callback(null, data);
             } else {
+                // secret key not matched
                 console.log('uid is not matched:' + deviceID);
-                let error = new Error('register info mismatch');
+                let error = new Error('register mismatch');
                 error.status = 400;
                 return callback(error, null);
             }
+        } else {
+            // new user register
+            dynamodb.putItem({ TableName: tableName, Item: item }, function (err, data) {
+                console.log('new uid registered');
+                if (err) return callback(err, null);
+                callback(null, data);
+            });
         }
-        dynamodb.putItem({ TableName: tableName, Item: item }, function (err, data) {
-            console.log('new uid registered');
-            if (err) return callback(err, null);
-            callback(null, data);
-        });
     });
 };
 
@@ -39,13 +44,15 @@ exports.getToken = function (deviceID, timestamp, signature, callback) {
             return callback(error, null);
         }
         var hash = crypto.createHmac('SHA256', data.Item.key.S).update(timestamp).digest('base64');
-        console.log('hash:' + hash);
+        // console.log('hash:' + hash);
         if (hash != signature) {
+            // signature mismatch
             let error = new Error('signature mismatch');
             error.status = 400;
             return callback(error, null);
         }
         STS.getFederationToken({ 'Name': deviceID, 'Policy': JSON.stringify(policy) }, function (err, data) {
+            // get new token
             if (err) return callback(err, null);
             callback(null, data);
         });
