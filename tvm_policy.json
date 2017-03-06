@@ -7,6 +7,14 @@
                 "s3:ListBucket",
                 "s3:GetObject"
             ],
+            "Resource": "arn:aws-cn:s3:::*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket",
+                "s3:GetObject"
+            ],
             "Resource": "arn:aws-cn:s3:::tvm-example"
         },
         {
