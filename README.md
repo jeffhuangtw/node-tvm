@@ -4,7 +4,7 @@ An anonymous Token Vending Machine for AWS.
 
 Provides two HTTP APIs:
 - POST to `/registerDevice` with `device_id` and `key` body params to register a device.
-- GET `/tokens` with `device_id`, `timestamp`, and `signature` query params; get temporary credentials back. The signature is a SHA256 HMAC hash of the timestamp using the key mentioned above.
+- GET `/getToken` with `device_id`, `timestamp`, and `signature` query params; get temporary credentials back. The signature is a SHA256 HMAC hash of the timestamp using the key mentioned above.
 
 ## Usage
 

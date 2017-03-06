@@ -25,7 +25,7 @@ app.get('/registerDevice', function (req, res) {
     });
 });
 
-app.get('/tokens', function (req, res) {
+app.get('/getToken', function (req, res) {
     atvm.getToken(req.query.device_id, req.query.timestamp, req.query.signature, function (err, data) {
         if (err) {
             return handleError(res, err);
