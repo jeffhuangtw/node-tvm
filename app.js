@@ -7,8 +7,17 @@ app.set('port', process.env.PORT || 3000);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.post('/registrations', function (req, res) {
+app.post('/registerDevice', function (req, res) {
     atvm.register(req.body.device_id, req.body.key, function (err, data) {
+        if (err) {
+            return handleError(res, err);
+        }
+        res.status(200).json({ 'result': 'ok' });
+    });
+});
+
+app.get('/registerDevice', function (req, res) {
+    atvm.register(req.query.device_id, req.query.key, function (err, data) {
         if (err) {
             return handleError(res, err);
         }
