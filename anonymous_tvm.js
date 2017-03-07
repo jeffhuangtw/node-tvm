@@ -1,7 +1,7 @@
 var crypto = require('crypto');
 var AWS = require('aws-sdk');
 AWS.config.update({ region: process.env.TVM_REGION });
-var policy = { 'Version': '2012-10-17', 'Statement': [{ 'Effect': 'Allow', 'Action': 's3:*', 'Resource': '*' }] }
+var policy = { 'Version': '2012-10-17', 'Statement': [{ 'Effect': 'Allow', 'Action': 's3:*', 'Resource': '*' }] };
 //var policy = require('./tvm_policy.json');
 var tableName = process.env.TVM_TABLE;
 var dynamodb = new AWS.DynamoDB();

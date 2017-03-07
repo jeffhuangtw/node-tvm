@@ -24,16 +24,7 @@
                 "s3:PutObject",
                 "s3:DeleteObject"
             ],
-            "Resource": "arn:aws:s3:::tvm-examplebucket/__USERNAME__/*"
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "s3:GetObject",
-                "s3:PutObject",
-                "s3:DeleteObject"
-            ],
-            "Resource": "arn:aws:s3:::tvm-examplebucket/*"
+            "Resource": "arn:aws:s3:::tvm-examplebucket/${aws:userid}/*"
         }
     ]
 }
