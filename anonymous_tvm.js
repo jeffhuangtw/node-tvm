@@ -7,7 +7,8 @@ var tableName = process.env.TVM_TABLE;
 var dynamodb = new AWS.DynamoDB();
 let STS;
 if (process.env.TVM_REGION == 'cn-north-1') {
-    STS = new AWS.STS({ apiVersion: '2011-06-15', endpoint: 'sts.cn-north-1.amazonaws.com.cn'});
+    STS = new AWS.STS({ apiVersion: '2011-06-15' });
+    STS.endpoint = new AWS.Endpoint('sts.cn-north-1.amazonaws.com.cn');
 } else {
     STS = new AWS.STS({ apiVersion: '2011-06-15'});
 }
