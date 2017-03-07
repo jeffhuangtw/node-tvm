@@ -51,7 +51,7 @@ exports.getToken = function (deviceID, timestamp, signature, callback) {
             error.status = 400;
             return callback(error, null);
         }
-
+        /*
         let params = {
             DurationSeconds: 3600,
             Policy: JSON.stringify(policy),
@@ -64,12 +64,11 @@ exports.getToken = function (deviceID, timestamp, signature, callback) {
             if (err) return callback(err, null);
             callback(null, data);
         });
-        /*
+        */
         STS.getFederationToken({ 'Name': deviceID, 'Policy': JSON.stringify(policy) }, function (err, data) {
             // get new token
             if (err) return callback(err, null);
             callback(null, data);
         });
-        */
     });
 };
