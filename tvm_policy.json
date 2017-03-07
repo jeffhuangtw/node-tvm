@@ -7,7 +7,7 @@
                 "s3:ListBucket",
                 "s3:GetObject"
             ],
-            "Resource": "arn:aws-cn:s3:::*"
+            "Resource": "arn:aws:s3:::*"
         },
         {
             "Effect": "Allow",
@@ -15,7 +15,7 @@
                 "s3:ListBucket",
                 "s3:GetObject"
             ],
-            "Resource": "arn:aws-cn:s3:::tvm-example"
+            "Resource": "arn:aws:s3:::tvm-examplebucket"
         },
         {
             "Effect": "Allow",
@@ -24,7 +24,7 @@
                 "s3:PutObject",
                 "s3:DeleteObject"
             ],
-            "Resource": "arn:aws-cn:s3:::tvm-example/__USERNAME__/*"
+            "Resource": "arn:aws:s3:::tvm-examplebucket/__USERNAME__/*"
         },
         {
             "Effect": "Allow",
@@ -33,7 +33,7 @@
                 "s3:PutObject",
                 "s3:DeleteObject"
             ],
-            "Resource": "arn:aws-cn:s3:::tvm-example/*"
+            "Resource": "arn:aws:s3:::tvm-examplebucket/*"
         }
     ]
 }
