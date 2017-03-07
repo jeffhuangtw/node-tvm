@@ -5,7 +5,12 @@ var policy = { 'Version': '2012-10-17', 'Statement': [{ 'Effect': 'Allow', 'Acti
 //var policy = require('./tvm_policy.json');
 var tableName = process.env.TVM_TABLE;
 var dynamodb = new AWS.DynamoDB();
-var STS = new AWS.STS({ apiVersion: '2011-06-15' });
+let STS;
+if (process.env.TVM_REGION == 'cn-north-1') {
+    STS = new AWS.STS({ apiVersion: '2011-06-15', endpoint: 'sts.cn-north-1.amazonaws.com.cn'});
+} else {
+    STS = new AWS.STS({ apiVersion: '2011-06-15'});
+}
 
 exports.register = function (deviceID, key, callback) {
     var item = { 'device_id': { 'S': deviceID }, 'key': { 'S': key } };
