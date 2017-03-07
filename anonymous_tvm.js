@@ -5,7 +5,7 @@ AWS.config.update({ region: process.env.TVM_REGION });
 var policy = require('./tvm_policy.json');
 var tableName = process.env.TVM_TABLE;
 var dynamodb = new AWS.DynamoDB();
-var STS = new AWS.STS();
+var STS = new AWS.STS({ apiVersion: '2011-06-15' });
 
 exports.register = function (deviceID, key, callback) {
     var item = { 'device_id': { 'S': deviceID }, 'key': { 'S': key } };
@@ -51,10 +51,25 @@ exports.getToken = function (deviceID, timestamp, signature, callback) {
             error.status = 400;
             return callback(error, null);
         }
+
+        let params = {
+            DurationSeconds: 3600,
+            Policy: JSON.stringify(policy),
+            RoleArn: process.env.TVM_ROLE,
+            RoleSessionName: deviceID
+        };
+
+        STS.assumeRole(params, function (err, data) {
+            // get new token
+            if (err) return callback(err, null);
+            callback(null, data);
+        });
+        /*
         STS.getFederationToken({ 'Name': deviceID, 'Policy': JSON.stringify(policy) }, function (err, data) {
             // get new token
             if (err) return callback(err, null);
             callback(null, data);
         });
+        */
     });
 };
